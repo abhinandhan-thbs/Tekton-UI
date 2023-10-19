@@ -1,0 +1,124 @@
+$se-dark-green: #007626 !default;
+$se-logo-green: #009530 !default;
+$se-life-green: #3dcd58 !default;
+$se-medium-green: #32ad3c !default;
+$se-light-green: #8ce599 !default;
+$se-dark-sky-blue: #0087cd !default;
+$se-medium-blue: #219bfd !default;
+$se-sky-blue: #42b4e6 !default;
+$se-fuchsia-red: #b10043 !default;
+$se-red: #dc0a0a !default;
+$se-honeysuckle-orange: #e47f00 !default;
+$se-sunflower-yellow: #ffd100 !default;
+$se-sky-blue-10p: #ecf7fc !default;
+$se-red-10p: #fceae7 !default;
+$se-true-black: #000000 !default;
+$se-black: #0f0f0f !default;
+$se-anthracite-grey: #333333 !default;
+$se-ultra-dark-grey: #434343 !default;
+$se-super-dark-grey: #505559 !default;
+$se-dark-grey: #626469 !default;
+$se-transparent-grey: rgba(0, 0, 0, 0.5) !default;
+$se-transparent-gray: $se-transparent-grey !default;
+$se-medium-grey: #9fa0a4 !default;
+$se-light-grey: #cbcbcb !default;
+$se-super-light-grey: #e6e6e6 !default;
+$se-ultra-light-grey-1: #ededed !default;
+$se-ultra-light-grey-2: #f7f7f7 !default;
+$se-ultra-light-grey-3: #f3f2f2 !default;
+$se-ultra-light-grey-4: #fafafa !default;
+$se-white: #ffffff !default;
+ 
+// All SE app should follow the same warning color
+// $success: $se-life-green !default;
+// $error: $se-red !default;
+// $warning: $se-honeysuckle-orange !default;
+$background: $se-ultra-light-grey-2 !default;
+ 
+// Only the seTheme should be used to change the them of the app
+
+$seTheme: (
+  "primary": $se-life-green,
+  "secondary": $se-sky-blue,
+  "standard": $se-dark-grey,
+  "alternative": $se-white,
+  "success": $se-life-green,
+  "information": $se-dark-sky-blue,
+  "warning": $se-honeysuckle-orange,
+  "error": $se-red,
+  "border": $se-medium-grey,
+  "disabled": $se-medium-grey,
+  "border-focus": $se-anthracite-grey,
+  "divider": $se-super-light-grey,
+  "link-visited": #3a738c,
+  "primary-contrast": $se-white,
+  "secondary-contrast": $se-white,
+  "standard-contrast": $se-white,
+  "alternative-contrast": $se-anthracite-grey,
+  "success-contrast": $se-white,
+  "information-contrast": $se-white,
+  "warning-contrast": $se-anthracite-grey,
+  "error-contrast": $se-white,
+  "primary-hover": $se-medium-green,
+  "secondary-hover": $se-dark-sky-blue,
+  "standard-hover": #494b50,
+  "alternative-hover": $se-super-light-grey,
+  "primary-selected": #0a9a25,
+  "secondary-selected": #0f81b3,
+  "standard-selected": #2f3136,
+  "alternative-selected": #cccccc,
+  "button-focus": #007acd,
+  "background-standard": $background,
+  "background-standard-contrast": $se-anthracite-grey,
+  "background-alternative": $se-white,
+  "background-alternative-contrast": $se-anthracite-grey,
+  "background-footer": #e7e6e6,
+  "background-footer-contrast": $se-anthracite-grey,
+  "overlay": rgba($se-black, 40%),
+  "overlay-loading": rgba($se-white, 40%),
+  "shadow": rgba($se-black, 20%),
+) !default;
+ 
+// overwrite only color different from light mode
+$seThemeDark: (
+  "background-standard": $se-super-dark-grey,
+  "background-standard-contrast": $se-white,
+  "background-alternative": #293133,
+  "background-alternative-contrast": $se-white,
+  "alternative": #293133,
+  "alternative-contrast": $se-white,
+  "alternative-hover": #434b4d,
+  "alternative-selected": #5c6466,
+  "standard": $se-light-grey,
+  "standard-contrast": $se-anthracite-grey,
+  "standard-hover": #b2b2b2,
+  "standard-selected": #989898,
+  "information": $se-sky-blue,
+  "shadow": #10181a,
+  "divider": #494b50,
+  "border": $se-dark-grey,
+  "border-focus": $se-dark-grey,
+  "overlay": rgba(255, 255, 255, 0.4),
+  "overlay-loading": rgba(0, 0, 0, 0.2),
+);
+ 
+// mapping definition of the SE variables
+$seColors: (
+  ("se-dark-green", $se-dark-green) ("se-logo-green", $se-logo-green)
+    ("se-life-green", $se-life-green) ("se-medium-green", $se-medium-green)
+    ("se-light-green", $se-light-green) ("se-dark-sky-blue", $se-dark-sky-blue)
+    ("se-medium-blue", $se-medium-blue) ("se-sky-blue", $se-sky-blue)
+    ("se-fuchsia-red", $se-fuchsia-red) ("se-red", $se-red)
+    ("se-honeysuckle-orange", $se-honeysuckle-orange)
+    ("se-sunflower-yellow", $se-sunflower-yellow)
+    ("se-sky-blue-10p", $se-sky-blue-10p) ("se-red-10p", $se-red-10p)
+    ("se-true-black", $se-true-black) ("se-black", $se-black)
+    ("se-anthracite-grey", $se-anthracite-grey)
+    ("se-ultra-dark-grey", $se-ultra-dark-grey)
+    ("se-super-dark-grey", $se-super-dark-grey) ("se-dark-grey", $se-dark-grey)
+    ("se-transparent-gray", $se-transparent-gray)
+    ("se-medium-grey", $se-medium-grey) ("se-light-grey", $se-light-grey)
+    ("se-super-light-grey", $se-super-light-grey)
+    ("se-ultra-light-grey-1", $se-ultra-light-grey-1)
+    ("se-ultra-light-grey-2", $se-ultra-light-grey-2) ("se-white", $se-white)
+);

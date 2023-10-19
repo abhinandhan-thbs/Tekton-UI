@@ -1,0 +1,47 @@
+// .tab-bar {
+//     text-align: center;
+//     margin: 20px;
+//     display: flex; 
+//     justify-content: space-between; 
+//     align-items: center;
+//   }
+  
+//   .tab {
+//     /* flex: 1;  */
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     background-color: white;
+//     padding: 5px 15px;
+//     margin: 0 5px; 
+//     cursor: pointer;
+//     transition: background-color 0.3s ease;
+//     text-decoration: none;
+//     border-bottom: none; 
+//     white-space: nowrap;
+//     overflow: hidden; 
+//     text-overflow: ellipsis; 
+//   }
+  
+//   .tab.active {
+//     background-color: orange;
+//     color: white;
+//     text-decoration: none;
+//     border-bottom: none; 
+//   }
+  
+//   .tab:last-child {
+//     flex-grow: 1;
+//   }
+
+// .MuiTabs-textColorPrimary.Mui-selected {
+//   color: white !important;
+// }
+
+// .MuiTabs-indicator {
+//   background-color: transparent !important;
+// }
+
+// .MuiTab-root.Mui-selected {
+//   background-color: orange !important;
+//   color: white !important;
+// }

@@ -1,0 +1,74 @@
+@import "mixins";
+@import "variables";
+
+$error-background: #f3d8e2;
+.text-center {
+  text-align: center;
+}
+
+.left-align {
+  text-align: end;
+}
+
+.text-align-end {
+  text-align-last: end;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.text-wrap {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.text-micro {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.read-only {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.spinner-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.product-quantity {
+  input {
+    width: 55px;
+    height: 36px;
+    font-size: $base-fontsize;
+    padding: 0;
+  }
+}
+
+.max-content {
+  width: max-content;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.content-wrap {
+  word-wrap: break-word;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.display-flex{
+  display: flex ;
+}

@@ -1,0 +1,152 @@
+@use "sass:list";
+@import "variables";
+@import 'colors';
+
+// Utilities : Paddings, Margins
+$spaces: (
+  none: 0,
+  nano: $spacing-nano,
+  small: $spacing-small,
+  base: $spacing-base,
+  medium: $spacing-medium,
+  large: $spacing-large,
+  mlarge: $spacing-mlarge,
+  xlarge: $spacing-xlarge,
+  xxlarge: $spacing-xxlarge,
+);
+$sides: (top, right, bottom, left);
+
+@each $name, $size in $spaces {
+  .m-#{$name} {
+    margin: #{$size};
+  }
+  .p-#{$name} {
+    padding: #{$size};
+  }
+
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$name} {
+      margin-#{$side}: #{$size} !important;
+    }
+    .p#{str-slice($side, 0, 1)}-#{$name} {
+      padding-#{$side}: #{$size} !important;
+    }
+  }
+}
+
+// Utilities : Alignments
+$content-values: (center, flex-start, flex-end, space-between, space-around);
+$item-values: (stretch, center, flex-start, flex-end, end);
+$direction-values: (row, row-reverse, column, column-reverse, normal);
+
+.d-flex {
+  display:flex;
+}
+
+@each $value in $content-values {
+  .justify-#{$value} {
+    justify-content:#{$value};
+  }
+}
+
+@each $value in $item-values {
+  .align-items-#{$value} {
+    align-items:#{$value};
+  }
+
+  .align-content-#{$value} {
+    align-content:#{$value};
+  }
+}
+
+@each $value in $direction-values {
+  .flex-#{$value} {
+    flex-direction:#{$value};
+  }
+}
+
+// Utilities : Typography
+$weights: (
+  bold: 700,
+  normal: 400,
+  thin: 100,
+);
+
+@each $name, $value in $weights {
+  .font-#{$name} {
+    font-weight: #{$value} !important;
+  }
+}
+
+// Utilities : Typography
+$header-sizes: $h1-fontsize, $h2-fontsize, $h3-fontsize, $h4-fontsize, $h5-fontsize, $h6-fontsize;
+$max-h-line-height: 50;
+
+@for $i from 1 through length($header-sizes) {
+  $size: list.nth($header-sizes, $i);
+  .h#{$i},
+  h#{$i} {
+    font-size: $size !important;
+    line-height: #{$max-h-line-height - (5 * $i)}px;
+    margin-bottom: 10px;
+  }
+}
+
+$text-sizes: ("big" $large-fontsize, "body" $base-fontsize, "small" $small-fontsize, "nano" $nano-fontsize);
+$max-text-line-height: 35;
+
+@for $i from 1 through length($text-sizes) {
+  $current-set: list.nth($text-sizes, $i);
+  $name: list.nth($current-set, 1);
+  $size: list.nth($current-set, 2);
+  .text-#{$name} {
+    font-size: $size !important;
+    line-height: #{$max-text-line-height - (5 * $i)}px;
+  }
+}
+
+// Utilities : cursors
+$cursors: (pointer, help, none, not-allowed);
+
+@each $value in $cursors {
+  .cursor-#{$value} {
+    cursor: #{$value};
+  }
+}
+
+// Utilities: box shadow
+.box-shadow {
+  box-shadow: 0 4px 4px -5px gray;
+}
+
+.color-border {
+  border-color:"border";
+}
+
+// Utilities : word-break
+$word-break: (break-all, normal, keep-all);
+
+@each $value in $word-break {
+  .word-#{$value} {
+    word-break: #{$value};
+  }
+}
+
+// Utilities : Se-Colors and Background
+@each $name, $value in $seColors {
+  .color-#{$name} {
+    color: #{$value};
+  }
+  .bg-#{$name} {
+    background: #{$value};
+  }
+}
+
+@for $i from 1 through 100{
+  .w-#{$i}{
+    width: $i * 1%;
+  }
+  .h-#{$i}{
+    height: $i;
+  }
+}
