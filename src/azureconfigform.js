@@ -106,21 +106,24 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
           Rate Limit Configuration
         </Typography>
         <form>
-          {azureComponentsEnabled && (
-            <>
-              <TextField
-                label="No. of calls"
-                fullWidth
-                value={rateLimitConfig.numberOfCalls}
-                onChange={(e) => handleRateLimitChange('numberOfCalls', e.target.value)}
-              />
-              <TextField
-                label="Renewal Period (seconds)"
-                fullWidth
-                value={rateLimitConfig.renewalPeriod}
-                onChange={(e) => handleRateLimitChange('renewalPeriod', e.target.value)}
-              />
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="subtitle1" style={{ flex: 1 }}>No. of calls:</Typography>
+                <TextField
+                  fullWidth
+                  value={rateLimitConfig.numberOfCalls}
+                  onChange={(e) => handleRateLimitChange('numberOfCalls', e.target.value)}
+                />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="subtitle1" style={{ flex: 1 }}>Renewal Period (seconds):</Typography>
+                <TextField
+                  fullWidth
+                  value={rateLimitConfig.renewalPeriod}
+                  onChange={(e) => handleRateLimitChange('renewalPeriod', e.target.value)}
+                />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="subtitle1" style={{ flex: 1 }}>Counter Key:</Typography>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -140,55 +143,64 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
                   label="User Identity"
                 />
               </div>
-            </>
-          )}
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Cache Responses Configuration
           </Typography>
-          <TextField
-            label="Duration (seconds)"
-            fullWidth
-            value={cacheResponseConfig.duration}
-            onChange={(e) => handleCacheResponseChange('duration', e.target.value)}
-          />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Duration (seconds):</Typography>
+            <TextField
+              fullWidth
+              value={cacheResponseConfig.duration}
+              onChange={(e) => handleCacheResponseChange('duration', e.target.value)}
+            />
+          </div>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Validate JWT Configuration
           </Typography>
-          <TextField
-            label="Header name"
-            fullWidth
-            value={validateJwtConfig.headerName}
-            onChange={(e) => handleValidateJwtChange('headerName', e.target.value)}
-          />
-          <TextField
-            label="Failed Validation HTTP Code"
-            fullWidth
-            value={validateJwtConfig.failedValidationHttpCode}
-            onChange={(e) => handleValidateJwtChange('failedValidationHttpCode', e.target.value)}
-          />
-          <TextField
-            label="Failed Validation Error Message"
-            fullWidth
-            value={validateJwtConfig.failedValidationErrorMsg}
-            onChange={(e) => handleValidateJwtChange('failedValidationErrorMsg', e.target.value)}
-          />
-          <TextField
-            label="OpenID URL"
-            fullWidth
-            value={validateJwtConfig.openIdUrl}
-            onChange={(e) => handleValidateJwtChange('openIdUrl', e.target.value)}
-          />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Header name:</Typography>
+            <TextField
+              fullWidth
+              value={validateJwtConfig.headerName}
+              onChange={(e) => handleValidateJwtChange('headerName', e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Failed Validation HTTP Code:</Typography>
+            <TextField
+              fullWidth
+              value={validateJwtConfig.failedValidationHttpCode}
+              onChange={(e) => handleValidateJwtChange('failedValidationHttpCode', e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Failed Validation Error Message:</Typography>
+            <TextField
+              fullWidth
+              value={validateJwtConfig.failedValidationErrorMsg}
+              onChange={(e) => handleValidateJwtChange('failedValidationErrorMsg', e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>OpenID URL:</Typography>
+            <TextField
+              fullWidth
+              value={validateJwtConfig.openIdUrl}
+              onChange={(e) => handleValidateJwtChange('openIdUrl', e.target.value)}
+            />
+          </div>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Required Claims
           </Typography>
           {validateJwtConfig.requiredClaims.map((claim, index) => (
-            <TextField
-              key={index}
-              label={`Claim ${index + 1}`}
-              fullWidth
-              value={claim}
-              onChange={(e) => handleClaimChange(index, e.target.value)}
-            />
+            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <Typography variant="subtitle1" style={{ flex: 1 }}>Claim {index + 1}:</Typography>
+              <TextField
+                fullWidth
+                value={claim}
+                onChange={(e) => handleClaimChange(index, e.target.value)}
+              />
+            </div>
           ))}
           <Button variant="outlined" onClick={handleAddRow}>
             Add Row
@@ -196,45 +208,51 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Correlation Configuration
           </Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={correlationConfig.correlationId}
-                onChange={() => handleCorrelationChange('correlationId')}
-              />
-            }
-            label="Correlation ID"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={correlationConfig.trace}
-                onChange={() => handleCorrelationChange('trace')}
-              />
-            }
-            label="Trace"
-          />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={correlationConfig.correlationId}
+                  onChange={() => handleCorrelationChange('correlationId')}
+                />
+              }
+              label="Correlation ID"
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={correlationConfig.trace}
+                  onChange={() => handleCorrelationChange('trace')}
+                />
+              }
+              label="Trace"
+            />
+          </div>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Filter IP Addresses
           </Typography>
-          <Select
-            label="IP Allowance"
-            value={ipAllowance}
-            onChange={(e) => setIpAllowance(e.target.value)}
-          >
-            <MenuItem value="allow">Allow</MenuItem>
-            <MenuItem value="deny">Deny</MenuItem>
-          </Select>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>IP Allowance</Typography>
+            <Select
+              value={ipAllowance}
+              onChange={(e) => setIpAllowance(e.target.value)}
+            >
+              <MenuItem value="allow">Allow</MenuItem>
+              <MenuItem value="deny">Deny</MenuItem>
+            </Select>
+          </div>
           {filterIpAddresses.map((ip, index) => (
-            <div key={index}>
+            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <Typography variant="subtitle1" style={{ flex: 1 }}>IP Address from</Typography>
               <TextField
-                label="IP Address from"
                 fullWidth
                 value={ip.from}
                 onChange={(e) => handleIpAddressesChange(index, 'from', e.target.value)}
               />
+              <Typography variant="subtitle1" style={{ flex: 1 }}>IP Address to</Typography>
               <TextField
-                label="IP Address to"
                 fullWidth
                 value={ip.to}
                 onChange={(e) => handleIpAddressesChange(index, 'to', e.target.value)}
@@ -250,24 +268,30 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Backend OAuth
           </Typography>
-          <TextField
-            label="Provided URL"
-            fullWidth
-            value={backendOAuthConfig.providedURL}
-            onChange={(e) => handleBackendOAuthChange('providedURL', e.target.value)}
-          />
-          <TextField
-            label="Client ID"
-            fullWidth
-            value={backendOAuthConfig.clientID}
-            onChange={(e) => handleBackendOAuthChange('clientID', e.target.value)}
-          />
-          <TextField
-            label="Client Secret"
-            fullWidth
-            value={backendOAuthConfig.clientSecret}
-            onChange={(e) => handleBackendOAuthChange('clientSecret', e.target.value)}
-          />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Provided URL</Typography>
+            <TextField
+              fullWidth
+              value={backendOAuthConfig.providedURL}
+              onChange={(e) => handleBackendOAuthChange('providedURL', e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Client ID</Typography>
+            <TextField
+              fullWidth
+              value={backendOAuthConfig.clientID}
+              onChange={(e) => handleBackendOAuthChange('clientID', e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" style={{ flex: 1 }}>Client Secret</Typography>
+            <TextField
+              fullWidth
+              value={backendOAuthConfig.clientSecret}
+              onChange={(e) => handleBackendOAuthChange('clientSecret', e.target.value)}
+            />
+          </div>
         </form>
       </Box>
     </Container>
