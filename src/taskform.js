@@ -10,6 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import ConfigurationsForm from './azureconfigform';
+
 
 function CustomToggleSwitch({ label, value, checked, onChange, disabled }) {
   return (
@@ -60,8 +62,13 @@ function TaskForm() {
 
   const handleToggleChange = (groupName, index) => {
     const group = [...groupName];
-    group[index].checked = !group[index].checked;
-    group[index].value = group[index].checked ? 'On' : 'Off';
+    if (groupName === azureToggles && switches.azureComponents) {
+      group[index].checked = !group[index].checked;
+      group[index].value = group[index].checked ? 'On' : 'Off';
+    } else if (groupName === orgConfigToggles && switches.orgConfig) {
+      group[index].checked = !group[index].checked;
+      group[index].value = group[index].checked ? 'On' : 'Off';
+    }
     if (groupName === azureToggles) {
       setAzureToggles(group);
     } else if (groupName === orgConfigToggles) {
@@ -88,7 +95,7 @@ function TaskForm() {
                 <TableCell>
                   <CustomToggleSwitch
                     label="Azure Components"
-                    value=""
+                    value={switches.allowedOrigins ? 'On' : 'Off'}
                     checked={switches.azureComponents}
                     onChange={() => handleSwitchChange('azureComponents')}
                   />
@@ -96,7 +103,7 @@ function TaskForm() {
                 <TableCell>
                   <CustomToggleSwitch
                     label="Org Config & Policies"
-                    value=""
+                    value={switches.allowedOrigins ? 'On' : 'Off'}
                     checked={switches.orgConfig}
                     onChange={() => handleSwitchChange('orgConfig')}
                   />
@@ -121,7 +128,6 @@ function TaskForm() {
                       value={toggle.value}
                       checked={toggle.checked}
                       onChange={() => handleToggleChange(azureToggles, index)}
-                      disabled={!switches.azureComponents}
                     />
                   </TableCell>
                   <TableCell>
@@ -131,7 +137,6 @@ function TaskForm() {
                         value={orgConfigToggles[index].value}
                         checked={orgConfigToggles[index].checked}
                         onChange={() => handleToggleChange(orgConfigToggles, index)}
-                        disabled={!switches.orgConfig}
                       />
                     ) : null}
                   </TableCell>
@@ -141,6 +146,21 @@ function TaskForm() {
           </Table>
         </TableContainer>
       </Box>
+      <Box sx={{display: 'none'}}>
+      <ConfigurationsForm
+      azureComponentsEnabled={switches.azureComponents}
+      filterIpAddressesEnabled={azureToggles[0].checked}
+      backendOAuthEnabled={azureToggles[1].checked}
+      rateLimitEnabled={azureToggles[2].checked}
+      cacheResponsesEnabled={azureToggles[3].checked}
+      validateJwtEnabled={azureToggles[4].checked}
+      correlationEnabled={azureToggles[5].checked}
+      createOrgConfigEnabled={orgConfigToggles[0].checked}
+      createPoliciesEnabled={orgConfigToggles[1].checked}
+      allowedOriginsEnabled={switches.allowedOrigins}
+      gitUploadEnabled={switches.gitUpload}
+    />
+    </Box>
     </Container>
   );
 }

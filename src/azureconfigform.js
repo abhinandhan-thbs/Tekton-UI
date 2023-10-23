@@ -9,7 +9,17 @@ import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-function ConfigurationsForm({ azureComponentsEnabled }) {
+function ConfigurationsForm({
+  azureComponentsEnabled,
+  filterIpAddressesEnabled,
+  backendOAuthEnabled,
+  rateLimitEnabled,
+  cacheResponsesEnabled,
+  validateJwtEnabled,
+  correlationEnabled,
+  allowedOriginsEnabled,
+  gitUploadEnabled,
+}) {
   const [rateLimitConfig, setRateLimitConfig] = useState({
     numberOfCalls: '',
     renewalPeriod: '',
@@ -102,6 +112,8 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
   return (
     <Container maxWidth="md">
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
+      {rateLimitEnabled && (
+        <>
         <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
           Rate Limit Configuration
         </Typography>
@@ -143,9 +155,15 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
                   label="User Identity"
                 />
               </div>
+              </form>
+              </>
+          )}
+          {cacheResponsesEnabled && (
+        <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Cache Responses Configuration
           </Typography>
+          <form>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="subtitle1" style={{ flex: 1 }}>Duration (seconds):</Typography>
             <TextField
@@ -154,9 +172,15 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
               onChange={(e) => handleCacheResponseChange('duration', e.target.value)}
             />
           </div>
+          </form>
+          </>
+          )}
+          {validateJwtEnabled && (
+        <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Validate JWT Configuration
           </Typography>
+          <form>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="subtitle1" style={{ flex: 1 }}>Header name:</Typography>
             <TextField
@@ -205,9 +229,15 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
           <Button variant="outlined" onClick={handleAddRow}>
             Add Row
           </Button>
+          </form>
+          </>
+          )}
+          {correlationEnabled && (
+        <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Correlation Configuration
           </Typography>
+          <form>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <FormControlLabel
               control={
@@ -230,9 +260,15 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
               label="Trace"
             />
           </div>
+          </form>
+          </>
+          )}
+          {filterIpAddressesEnabled && (
+        <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Filter IP Addresses
           </Typography>
+          <form>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="subtitle1" style={{ flex: 1 }}>IP Allowance</Typography>
             <Select
@@ -265,9 +301,15 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
           <Button variant="outlined" onClick={handleAddIpRow}>
             Add Row
           </Button>
+          </form>
+          </>
+          )}
+          {backendOAuthEnabled && (
+        <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Backend OAuth
           </Typography>
+          <form>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="subtitle1" style={{ flex: 1 }}>Provided URL</Typography>
             <TextField
@@ -293,6 +335,8 @@ function ConfigurationsForm({ azureComponentsEnabled }) {
             />
           </div>
         </form>
+        </>
+        )}
       </Box>
     </Container>
   );

@@ -8,10 +8,15 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from "react-router-dom";
 
 function BasicConfigForm() {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [apiName, setApiName] = useState('');
+  const [description, setDescription] = useState('');
+  const [basePath, setBasePath] = useState('');
 
   const handleFileChange = () => {
     const fileInput = document.getElementById('file-input');
@@ -42,6 +47,20 @@ function BasicConfigForm() {
       });
     }, 500);
   };
+  const isFormValid = () => {
+    return selectedFile && uploadProgress === 100 && apiName && description && basePath;
+  };
+
+  const handleProceed = () => {
+    if (isFormValid()) {
+      // Proceed to the next form or perform the desired action
+      // You can add your logic here
+      navigate("/basicinfo");
+    } else {
+      // Display an error message or take appropriate action for invalid form
+    }
+  };
+
 
   return (
     <Container maxWidth="md">
@@ -111,20 +130,52 @@ function BasicConfigForm() {
               <Typography variant="h6" sx={{ width: '150px' }}>
                 API name
               </Typography>
-              <TextField variant="outlined" type="text" fullWidth label="API name" sx={{ flex: '1' }} />
+              <TextField
+                variant="outlined"
+                type="text"
+                fullWidth
+                label="API name"
+                sx={{ flex: '1' }}
+                value={apiName}
+                onChange={(e) => setApiName(e.target.value)}
+              />
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
               <Typography variant="h6" sx={{ width: '150px' }}>
                 Description
               </Typography>
-              <TextField variant="outlined" type="text" fullWidth label="Description" sx={{ flex: '1' }} />
+              <TextField
+                variant="outlined"
+                type="text"
+                fullWidth
+                label="Description"
+                sx={{ flex: '1' }}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
               <Typography variant="h6" sx={{ width: '150px' }}>
                 Base Path
               </Typography>
-              <TextField variant="outlined" type="text" fullWidth label="Base Path" sx={{ flex: '1' }} />
+              <TextField
+                variant="outlined"
+                type="text"
+                fullWidth
+                label="Base Path"
+                sx={{ flex: '1' }}
+                value={basePath}
+                onChange={(e) => setBasePath(e.target.value)}
+              />
             </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleProceed()}
+              disabled={!isFormValid()}
+            >
+              Proceed
+            </Button>
           </Box>
         </form>
       </Box>

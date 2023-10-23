@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
@@ -10,8 +10,56 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 function PrelimInfoForm() {
+  const navigate = useNavigate();
+  const [formValues, setFormValues] = useState({
+    template: '',
+    microservice: false,
+    gateway: false,
+    apiTool: '',
+    artifact: '',
+    templateType: '',
+  });
+
+  const isFormValid = () => {
+    const {
+      template,
+      microservice,
+      gateway,
+      apiTool,
+      artifact,
+      templateType,
+    } = formValues;
+
+    return (
+      template !== '' &&
+      (microservice || gateway) &&
+      apiTool !== '' &&
+      artifact !== '' &&
+      templateType !== ''
+    );
+  };
+
+  const handleProceed = () => {
+    if (isFormValid()) {
+      // Proceed to the next form or perform the desired action
+      // You can add your logic here
+      navigate("/basicinfo");
+    } else {
+      // Display an error message or take appropriate action for invalid form
+    }
+  };
+
+  const handleChange = (field, value) => {
+    setFormValues({
+      ...formValues,
+      [field]: value,
+    });
+  };
+
   return (
     <Container maxWidth="md">
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
@@ -25,21 +73,31 @@ function PrelimInfoForm() {
                 name: 'template',
                 id: 'template',
               }}
+              value={formValues.template}
+              onChange={(e) => handleChange('template', e.target.value)}
             >
               <MenuItem value={1}>Schneider Electric APIM</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
           <Typography variant="h6">Service Type</Typography>
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={formValues.microservice}
+                onChange={() => handleChange('microservice', !formValues.microservice)}
+              />
+            }
             label="Microservice"
           />
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={formValues.gateway}
+                onChange={() => handleChange('gateway', !formValues.gateway)}
+              />
+            }
             label="Gateway"
           />
         </Box>
@@ -54,10 +112,10 @@ function PrelimInfoForm() {
                   name: 'apiTool',
                   id: 'apiTool',
                 }}
+                value={formValues.apiTool}
+                onChange={(e) => handleChange('apiTool', e.target.value)}
               >
                 <MenuItem value={1}>AZURE</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -71,10 +129,10 @@ function PrelimInfoForm() {
                   name: 'artifact',
                   id: 'artifact',
                 }}
+                value={formValues.artifact}
+                onChange={(e) => handleChange('artifact', e.target.value)}
               >
                 <MenuItem value={1}>YAML</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -82,22 +140,38 @@ function PrelimInfoForm() {
         <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
           <Typography variant="h6">Template</Typography>
           <FormControlLabel
-            control={<RadioGroup aria-label="templateRadio" name="templateRadio" sx={{ display: 'flex', flexDirection: 'row' }}>
-              <FormControlLabel
-                value="General"
-                control={<Radio />}
-                label="General"
-                sx={{ marginLeft: 2, marginRight: 2 }}
-              />
-              <FormControlLabel
-                value="Convergent"
-                control={<Radio />}
-                label="Convergent"
-                sx={{ marginLeft: 2, marginRight: 2 }}
-              />
-            </RadioGroup>}
+            control={
+              <RadioGroup
+                aria-label="templateRadio"
+                name="templateRadio"
+                sx={{ display: 'flex', flexDirection: 'row' }}
+                value={formValues.templateType}
+                onChange={(e) => handleChange('templateType', e.target.value)}
+              >
+                <FormControlLabel
+                  value="General"
+                  control={<Radio />}
+                  label="General"
+                  sx={{ marginLeft: 2, marginRight: 2 }}
+                />
+                <FormControlLabel
+                  value="Convergent"
+                  control={<Radio />}
+                  label="Convergent"
+                  sx={{ marginLeft: 2, marginRight: 2 }}
+                />
+              </RadioGroup>
+            }
           />
         </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleProceed}
+          // disabled={!isFormValid()}
+        >
+          Proceed
+        </Button>
       </Box>
     </Container>
   );
