@@ -11,7 +11,8 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ConfigurationsForm from './azureconfigform';
-
+import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 function CustomToggleSwitch({ label, value, checked, onChange, disabled }) {
   return (
@@ -35,6 +36,7 @@ function CustomToggleSwitch({ label, value, checked, onChange, disabled }) {
 }
 
 function TaskForm() {
+  const navigate = useNavigate();
   const [switches, setSwitches] = useState({
     allowedOrigins: false,
     azureComponents: false,
@@ -76,6 +78,12 @@ function TaskForm() {
     }
   };
 
+  const handleProceed = () => {
+    // Navigate to the next form or perform the desired action
+    // You can add your logic here
+    navigate("/azureconfig");
+  };
+
   return (
     <Container maxWidth="md">
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
@@ -95,7 +103,7 @@ function TaskForm() {
                 <TableCell>
                   <CustomToggleSwitch
                     label="Azure Components"
-                    value={switches.allowedOrigins ? 'On' : 'Off'}
+                    value={switches.azureComponents ? 'On' : 'Off'}
                     checked={switches.azureComponents}
                     onChange={() => handleSwitchChange('azureComponents')}
                   />
@@ -103,7 +111,7 @@ function TaskForm() {
                 <TableCell>
                   <CustomToggleSwitch
                     label="Org Config & Policies"
-                    value={switches.allowedOrigins ? 'On' : 'Off'}
+                    value={switches.orgConfig ? 'On' : 'Off'}
                     checked={switches.orgConfig}
                     onChange={() => handleSwitchChange('orgConfig')}
                   />
@@ -145,22 +153,25 @@ function TaskForm() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Button variant="contained" color="primary" onClick={handleProceed}>
+          Proceed
+        </Button>
       </Box>
       <Box sx={{display: 'none'}}>
-      <ConfigurationsForm
-      azureComponentsEnabled={switches.azureComponents}
-      filterIpAddressesEnabled={azureToggles[0].checked}
-      backendOAuthEnabled={azureToggles[1].checked}
-      rateLimitEnabled={azureToggles[2].checked}
-      cacheResponsesEnabled={azureToggles[3].checked}
-      validateJwtEnabled={azureToggles[4].checked}
-      correlationEnabled={azureToggles[5].checked}
-      createOrgConfigEnabled={orgConfigToggles[0].checked}
-      createPoliciesEnabled={orgConfigToggles[1].checked}
-      allowedOriginsEnabled={switches.allowedOrigins}
-      gitUploadEnabled={switches.gitUpload}
-    />
-    </Box>
+        <ConfigurationsForm
+          azureComponentsEnabled={switches.azureComponents}
+          filterIpAddressesEnabled={azureToggles[0].checked}
+          backendOAuthEnabled={azureToggles[1].checked}
+          rateLimitEnabled={azureToggles[2].checked}
+          cacheResponsesEnabled={azureToggles[3].checked}
+          validateJwtEnabled={azureToggles[4].checked}
+          correlationEnabled={azureToggles[5].checked}
+          createOrgConfigEnabled={orgConfigToggles[0].checked}
+          createPoliciesEnabled={orgConfigToggles[1].checked}
+          allowedOriginsEnabled={switches.allowedOrigins}
+          gitUploadEnabled={switches.gitUpload}
+        />
+      </Box>
     </Container>
   );
 }

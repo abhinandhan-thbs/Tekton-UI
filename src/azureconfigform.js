@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from "react-router-dom";
 
 function ConfigurationsForm({
   azureComponentsEnabled,
@@ -20,6 +21,7 @@ function ConfigurationsForm({
   allowedOriginsEnabled,
   gitUploadEnabled,
 }) {
+  const navigate = useNavigate();
   const [rateLimitConfig, setRateLimitConfig] = useState({
     numberOfCalls: '',
     renewalPeriod: '',
@@ -107,6 +109,12 @@ function ConfigurationsForm({
 
   const handleBackendOAuthChange = (field, value) => {
     setBackendOAuthConfig({ ...backendOAuthConfig, [field]: value });
+  };
+
+  const handleProceed = () => {
+    // Navigate to the next form or perform the desired action
+    // You can add your logic here
+    navigate("/genartifacts");
   };
 
   return (
@@ -338,6 +346,9 @@ function ConfigurationsForm({
         </>
         )}
       </Box>
+      <Button variant="contained" color="primary" onClick={handleProceed}>
+          Proceed
+        </Button>
     </Container>
   );
 }
