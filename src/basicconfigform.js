@@ -47,6 +47,7 @@ function BasicConfigForm() {
       });
     }, 500);
   };
+  
   const isFormValid = () => {
     return selectedFile && uploadProgress === 100 && apiName && description && basePath;
   };
@@ -55,12 +56,12 @@ function BasicConfigForm() {
     if (isFormValid()) {
       // Proceed to the next form or perform the desired action
       // You can add your logic here
-      navigate("/basicinfo");
+      navigate("/task");
     } else {
-      // Display an error message or take appropriate action for invalid form
+      // Display an error message or take appropriate action for an invalid form
+      console.log('Form is invalid');
     }
   };
-
 
   return (
     <Container maxWidth="md">
@@ -171,7 +172,7 @@ function BasicConfigForm() {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleProceed()}
+              onClick={handleProceed}
               disabled={!isFormValid()}
             >
               Proceed
