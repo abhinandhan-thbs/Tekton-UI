@@ -8,20 +8,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 
-function ConfigurationsForm({
-  azureComponentsEnabled,
-  filterIpAddressesEnabled,
-  backendOAuthEnabled,
-  rateLimitEnabled,
-  cacheResponsesEnabled,
-  validateJwtEnabled,
-  correlationEnabled,
-  allowedOriginsEnabled,
-  gitUploadEnabled,
-}) {
+function ConfigurationsForm() {
+  const location = useLocation();
+  const state = location.state;
   const navigate = useNavigate();
+
   const [rateLimitConfig, setRateLimitConfig] = useState({
     numberOfCalls: '',
     renewalPeriod: '',
@@ -111,16 +104,80 @@ function ConfigurationsForm({
     setBackendOAuthConfig({ ...backendOAuthConfig, [field]: value });
   };
 
-  const handleProceed = () => {
-    // Navigate to the next form or perform the desired action
-    // You can add your logic here
-    navigate("/genartifacts");
+  const checkFormValidity = (
+    state,
+    rateLimitConfig,
+    cacheResponseConfig,
+    validateJwtConfig,
+    correlationConfig,
+    filterIpAddresses,
+    ipAllowance,
+    backendOAuthConfig
+  ) => {
+    const rateLimitValid =
+      state.rateLimitEnabled &&
+      rateLimitConfig.numberOfCalls !== '' &&
+      rateLimitConfig.renewalPeriod !== '' &&
+      (rateLimitConfig.counterKey === 'ip_address' || rateLimitConfig.counterKey === 'user_identity');
+  
+    const cacheResponseValid =
+      state.cacheResponsesEnabled && cacheResponseConfig.duration !== '';
+  
+    const validateJwtValid =
+      state.validateJwtEnabled &&
+      validateJwtConfig.headerName !== '' &&
+      validateJwtConfig.failedValidationHttpCode !== '' &&
+      validateJwtConfig.failedValidationErrorMsg !== '' &&
+      validateJwtConfig.openIdUrl !== '' &&
+      validateJwtConfig.requiredClaims.every((claim) => claim !== '');
+  
+    const correlationValid = state.correlationEnabled || true; 
+  
+    const filterIpAddressesValid =
+      state.filterIpAddressesEnabled &&
+      (ipAllowance === 'deny' || filterIpAddresses.every((ip) => ip.from !== '' && ip.to !== ''));
+  
+    const backendOAuthValid =
+      state.backendOAuthEnabled &&
+      backendOAuthConfig.providedURL !== '' &&
+      backendOAuthConfig.clientID !== '' &&
+      backendOAuthConfig.clientSecret !== '';
+  
+    const overallValid =
+      (!state.rateLimitEnabled || rateLimitValid) &&
+      (!state.cacheResponsesEnabled || cacheResponseValid) &&
+      (!state.validateJwtEnabled || validateJwtValid) &&
+      (!state.correlationEnabled || correlationValid) &&
+      (!state.filterIpAddressesEnabled || filterIpAddressesValid) &&
+      (!state.backendOAuthEnabled || backendOAuthValid);
+  
+    return overallValid;
   };
+  
+  
+  const handleProceed = () => {
+    const isValid = checkFormValidity(
+      state,
+      rateLimitConfig,
+      cacheResponseConfig,
+      validateJwtConfig,
+      correlationConfig,
+      filterIpAddresses,
+      ipAllowance,
+      backendOAuthConfig
+    );
+  
+  
+    if (isValid) {
+      navigate("/genartifacts");
+    } 
+  };
+  
 
   return (
     <Container maxWidth="md">
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
-      {rateLimitEnabled && (
+      { state.rateLimitEnabled && (
         <>
         <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
           Rate Limit Configuration
@@ -166,7 +223,7 @@ function ConfigurationsForm({
               </form>
               </>
           )}
-          {cacheResponsesEnabled && (
+          {state.cacheResponsesEnabled && (
         <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Cache Responses Configuration
@@ -183,7 +240,7 @@ function ConfigurationsForm({
           </form>
           </>
           )}
-          {validateJwtEnabled && (
+          {state.validateJwtEnabled && (
         <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Validate JWT Configuration
@@ -240,7 +297,7 @@ function ConfigurationsForm({
           </form>
           </>
           )}
-          {correlationEnabled && (
+          {state.correlationEnabled && (
         <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Correlation Configuration
@@ -271,7 +328,7 @@ function ConfigurationsForm({
           </form>
           </>
           )}
-          {filterIpAddressesEnabled && (
+          {state.filterIpAddressesEnabled && (
         <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Filter IP Addresses
@@ -312,7 +369,7 @@ function ConfigurationsForm({
           </form>
           </>
           )}
-          {backendOAuthEnabled && (
+          {state.backendOAuthEnabled && (
         <>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Backend OAuth
@@ -346,7 +403,7 @@ function ConfigurationsForm({
         </>
         )}
       </Box>
-      <Button variant="contained" color="primary" onClick={handleProceed}>
+      <Button variant="contained" color="primary" onClick={handleProceed} >
           Proceed
         </Button>
     </Container>

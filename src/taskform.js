@@ -10,7 +10,6 @@ import TableRow from '@mui/material/TableRow';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ConfigurationsForm from './azureconfigform';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 
@@ -79,9 +78,31 @@ function TaskForm() {
   };
 
   const handleProceed = () => {
-    // Navigate to the next form or perform the desired action
-    // You can add your logic here
-    navigate("/azureconfig");
+    const finalState = {
+      azureComponentsEnabled: switches.azureComponents,
+      filterIpAddressesEnabled: azureToggles[0].checked,
+      backendOAuthEnabled: azureToggles[1].checked,
+      rateLimitEnabled: azureToggles[2].checked,
+      cacheResponsesEnabled: azureToggles[3].checked,
+      validateJwtEnabled: azureToggles[4].checked,
+      correlationEnabled: azureToggles[5].checked,
+      allowedOriginsEnabled: switches.allowedOrigins,
+      gitUploadEnabled: switches.gitUpload,
+    };
+
+    navigate("/azureconfig", {
+      state: {
+        azureComponentsEnabled: finalState.azureComponentsEnabled,
+        filterIpAddressesEnabled: finalState.filterIpAddressesEnabled,
+        backendOAuthEnabled: finalState.backendOAuthEnabled,
+        rateLimitEnabled: finalState.rateLimitEnabled,
+        cacheResponsesEnabled: finalState.cacheResponsesEnabled,
+        validateJwtEnabled: finalState.validateJwtEnabled,
+        correlationEnabled: finalState.correlationEnabled,
+        allowedOriginsEnabled: finalState.allowedOriginsEnabled,
+        gitUploadEnabled: finalState.gitUploadEnabled,
+      }
+    });
   };
 
   return (
@@ -156,21 +177,6 @@ function TaskForm() {
         <Button variant="contained" color="primary" onClick={handleProceed}>
           Proceed
         </Button>
-      </Box>
-      <Box sx={{display: 'none'}}>
-        <ConfigurationsForm
-          azureComponentsEnabled={switches.azureComponents}
-          filterIpAddressesEnabled={azureToggles[0].checked}
-          backendOAuthEnabled={azureToggles[1].checked}
-          rateLimitEnabled={azureToggles[2].checked}
-          cacheResponsesEnabled={azureToggles[3].checked}
-          validateJwtEnabled={azureToggles[4].checked}
-          correlationEnabled={azureToggles[5].checked}
-          createOrgConfigEnabled={orgConfigToggles[0].checked}
-          createPoliciesEnabled={orgConfigToggles[1].checked}
-          allowedOriginsEnabled={switches.allowedOrigins}
-          gitUploadEnabled={switches.gitUpload}
-        />
       </Box>
     </Container>
   );
