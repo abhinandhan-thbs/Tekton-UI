@@ -14,12 +14,12 @@ function App() {
     <Router>
       <TabbedFormRenderer activeTab={activeTab} setActiveTab={setActiveTab}/>
     <Routes>
-    <Route path="/" element={<PrelimInfoForm/>} tab={0}/>
-    <Route path="/preliminfo" element={<PrelimInfoForm/>} tab={0}/>
-    <Route path="/basicinfo" element={<BasicConfigForm tab={1}/>} />
-    <Route path="/task" element={<TaskForm/>} tab={3}/>
-    <Route path="/azureconfig" element={<ConfigurationsForm/>}tab={4}/>
-    <Route path="/genartifacts" element={<GitConfigForm/>} tab={5}/>
+    <Route path="/" element={<PrelimInfoForm/>} />
+    <Route path="/preliminfo" element={<PrelimInfoForm/>}/>
+    <Route path="/basicinfo" element={<BasicConfigForm/>} />
+    <Route path="/task" element={<TaskForm/>}/>
+    <Route path="/azureconfig" element={<ConfigurationsForm/>}/>
+    <Route path="/genartifacts" element={<GitConfigForm/>}/>
 
     </Routes>
     </Router>

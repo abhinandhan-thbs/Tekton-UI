@@ -8,24 +8,24 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 function BasicConfigForm() {
   const navigate = useNavigate();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [apiName, setApiName] = useState('');
-  const [description, setDescription] = useState('');
-  const [basePath, setBasePath] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [apiName, setApiName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [basePath, setBasePath] = useState<string>('');
 
   const handleFileChange = () => {
-    const fileInput = document.getElementById('file-input');
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
     fileInput.click();
   };
 
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setSelectedFile(file || null);
   };
 
   const handleRemoveFile = () => {
@@ -46,20 +46,15 @@ function BasicConfigForm() {
         return newProgress;
       });
     }, 500);
-  };
-  
+  }
+
   const isFormValid = () => {
     return selectedFile && uploadProgress === 100 && apiName && description && basePath;
   };
 
   const handleProceed = () => {
     if (isFormValid()) {
-      // Proceed to the next form or perform the desired action
-      // You can add your logic here
-      navigate("/task");
-    } else {
-      // Display an error message or take appropriate action for an invalid form
-      console.log('Form is invalid');
+      navigate('/task');
     }
   };
 
@@ -173,7 +168,6 @@ function BasicConfigForm() {
               variant="contained"
               color="primary"
               onClick={handleProceed}
-              disabled={!isFormValid()}
             >
               Proceed
             </Button>

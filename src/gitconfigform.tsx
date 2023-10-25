@@ -6,20 +6,22 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 function GitConfigForm() {
-  const [serviceName, setServiceName] = useState('');
-  const [gitBranch, setGitBranch] = useState('');
-  const [showAdditionalButtons, setShowAdditionalButtons] = useState(false);
+  const [serviceName, setServiceName] = useState<string>('');
+  const [gitBranch, setGitBranch] = useState<string>('');
+  const [showAdditionalButtons, setShowAdditionalButtons] = useState<boolean>(false);
 
-  const handleServiceNameChange = (event) => {
+  const handleServiceNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setServiceName(event.target.value);
   };
 
-  const handleGitBranchChange = (event) => {
+  const handleGitBranchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGitBranch(event.target.value);
   };
 
   const handleGenerateArtifacts = () => {
-    setShowAdditionalButtons(true);
+    if (serviceName && gitBranch) {
+      setShowAdditionalButtons(true);
+    }
   };
 
   const handleDownloadFiles = () => {

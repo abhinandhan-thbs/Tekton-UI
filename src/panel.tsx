@@ -1,11 +1,21 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Container from '@mui/material/Container'
+import Container from '@mui/material/Container';
 
-function TabbedFormRenderer({ activeTab, setActiveTab }) {
+interface TabInfo {
+  name: string;
+  heading: string;
+  subheading: string;
+}
 
-  const tabs = [
+interface TabbedFormRendererProps {
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function TabbedFormRenderer({ activeTab, setActiveTab }: TabbedFormRendererProps) {
+  const tabs: TabInfo[] = [
     {
       name: 'Tab 1',
       heading: 'Step 1',
@@ -43,7 +53,7 @@ function TabbedFormRenderer({ activeTab, setActiveTab }) {
     },
   ];
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
@@ -52,7 +62,7 @@ function TabbedFormRenderer({ activeTab, setActiveTab }) {
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
-        variant="scrollable"  
+        variant="scrollable"
         scrollButtons="auto"
         sx={{ border: 1, borderColor: 'divider' }}
       >
@@ -76,7 +86,6 @@ function TabbedFormRenderer({ activeTab, setActiveTab }) {
           />
         ))}
       </Tabs>
-     
     </Container>
   );
 }

@@ -11,11 +11,20 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+interface FormValues {
+  template: string;
+  microservice: boolean;
+  gateway: boolean;
+  apiTool: string;
+  artifact: string;
+  templateType: string;
+}
 
 function PrelimInfoForm() {
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<FormValues>({
     template: '',
     microservice: false,
     gateway: false,
@@ -45,15 +54,11 @@ function PrelimInfoForm() {
 
   const handleProceed = () => {
     if (isFormValid()) {
-      // Proceed to the next form or perform the desired action
-      // You can add your logic here
-      navigate("/basicinfo");
-    } else {
-      // Display an error message or take appropriate action for invalid form
+      navigate('/basicinfo');
     }
   };
 
-  const handleChange = (field, value) => {
+  const handleChange = (field: keyof FormValues, value: string | boolean) => {
     setFormValues({
       ...formValues,
       [field]: value,
@@ -140,35 +145,29 @@ function PrelimInfoForm() {
         <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
           <Typography variant="h6">Template</Typography>
           <FormControlLabel
-            control={
-              <RadioGroup
-                aria-label="templateRadio"
-                name="templateRadio"
-                sx={{ display: 'flex', flexDirection: 'row' }}
-                value={formValues.templateType}
-                onChange={(e) => handleChange('templateType', e.target.value)}
-              >
-                <FormControlLabel
-                  value="General"
-                  control={<Radio />}
-                  label="General"
-                  sx={{ marginLeft: 2, marginRight: 2 }}
-                />
-                <FormControlLabel
-                  value="Convergent"
-                  control={<Radio />}
-                  label="Convergent"
-                  sx={{ marginLeft: 2, marginRight: 2 }}
-                />
-              </RadioGroup>
-            }
-          />
+            control={<RadioGroup
+              aria-label="templateRadio"
+              name="templateRadio"
+              sx={{ display: 'flex', flexDirection: 'row' }}
+              value={formValues.templateType}
+              onChange={(e) => handleChange('templateType', e.target.value)}
+            >
+              <FormControlLabel
+                value="General"
+                control={<Radio />}
+                label="General"
+                sx={{ marginLeft: 2, marginRight: 2 }} />
+              <FormControlLabel
+                value="Convergent"
+                control={<Radio />}
+                label="Convergent"
+                sx={{ marginLeft: 2, marginRight: 2 }} />
+            </RadioGroup>} label={undefined}          />
         </Box>
         <Button
           variant="contained"
           color="primary"
           onClick={handleProceed}
-          // disabled={!isFormValid()}
         >
           Proceed
         </Button>

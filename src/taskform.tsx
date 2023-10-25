@@ -10,10 +10,28 @@ import TableRow from '@mui/material/TableRow';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
-function CustomToggleSwitch({ label, value, checked, onChange, disabled }) {
+interface AzureToggle {
+  label: string;
+  value: string;
+  checked: boolean;
+}
+
+function CustomToggleSwitch({
+  label,
+  value,
+  checked,
+  onChange,
+  disabled,
+}: {
+  label: string;
+  value: string;
+  checked: boolean;
+  onChange: () => void;
+  disabled: boolean;
+}) {
   return (
     <FormControlLabel
       control={
@@ -43,7 +61,7 @@ function TaskForm() {
     gitUpload: false,
   });
 
-  const [azureToggles, setAzureToggles] = useState([
+  const [azureToggles, setAzureToggles] = useState<AzureToggle[]>([
     { label: 'Filter IP Addresses', value: 'Off', checked: false },
     { label: 'Backend OAuth', value: 'Off', checked: false },
     { label: 'Rate Limit (Inbound)', value: 'Off', checked: false },
@@ -52,16 +70,16 @@ function TaskForm() {
     { label: 'Correlation', value: 'Off', checked: false },
   ]);
 
-  const [orgConfigToggles, setOrgConfigToggles] = useState([
+  const [orgConfigToggles, setOrgConfigToggles] = useState<AzureToggle[]>([
     { label: 'Create Org Config', value: 'Off', checked: false },
     { label: 'Create Policies', value: 'Off', checked: false },
   ]);
 
-  const handleSwitchChange = (name) => {
+  const handleSwitchChange = (name: keyof typeof switches) => {
     setSwitches({ ...switches, [name]: !switches[name] });
   };
 
-  const handleToggleChange = (groupName, index) => {
+  const handleToggleChange = (groupName: AzureToggle[], index: number) => {
     const group = [...groupName];
     if (groupName === azureToggles && switches.azureComponents) {
       group[index].checked = !group[index].checked;
@@ -78,31 +96,35 @@ function TaskForm() {
   };
 
   const handleProceed = () => {
-    const finalState = {
-      azureComponentsEnabled: switches.azureComponents,
-      filterIpAddressesEnabled: azureToggles[0].checked,
-      backendOAuthEnabled: azureToggles[1].checked,
-      rateLimitEnabled: azureToggles[2].checked,
-      cacheResponsesEnabled: azureToggles[3].checked,
-      validateJwtEnabled: azureToggles[4].checked,
-      correlationEnabled: azureToggles[5].checked,
-      allowedOriginsEnabled: switches.allowedOrigins,
-      gitUploadEnabled: switches.gitUpload,
-    };
+    const azurecount = azureToggles.some((toggle) => toggle.checked);
 
-    navigate("/azureconfig", {
-      state: {
-        azureComponentsEnabled: finalState.azureComponentsEnabled,
-        filterIpAddressesEnabled: finalState.filterIpAddressesEnabled,
-        backendOAuthEnabled: finalState.backendOAuthEnabled,
-        rateLimitEnabled: finalState.rateLimitEnabled,
-        cacheResponsesEnabled: finalState.cacheResponsesEnabled,
-        validateJwtEnabled: finalState.validateJwtEnabled,
-        correlationEnabled: finalState.correlationEnabled,
-        allowedOriginsEnabled: finalState.allowedOriginsEnabled,
-        gitUploadEnabled: finalState.gitUploadEnabled,
-      }
-    });
+    if (azurecount) {
+      const finalState = {
+        azureComponentsEnabled: switches.azureComponents,
+        filterIpAddressesEnabled: azureToggles[0].checked,
+        backendOAuthEnabled: azureToggles[1].checked,
+        rateLimitEnabled: azureToggles[2].checked,
+        cacheResponsesEnabled: azureToggles[3].checked,
+        validateJwtEnabled: azureToggles[4].checked,
+        correlationEnabled: azureToggles[5].checked,
+        allowedOriginsEnabled: switches.allowedOrigins,
+        gitUploadEnabled: switches.gitUpload,
+      };
+
+      navigate('/azureconfig', {
+        state: {
+          azureComponentsEnabled: finalState.azureComponentsEnabled,
+          filterIpAddressesEnabled: finalState.filterIpAddressesEnabled,
+          backendOAuthEnabled: finalState.backendOAuthEnabled,
+          rateLimitEnabled: finalState.rateLimitEnabled,
+          cacheResponsesEnabled: finalState.cacheResponsesEnabled,
+          validateJwtEnabled: finalState.validateJwtEnabled,
+          correlationEnabled: finalState.correlationEnabled,
+          allowedOriginsEnabled: finalState.allowedOriginsEnabled,
+          gitUploadEnabled: finalState.gitUploadEnabled,
+        },
+      });
+    }
   };
 
   return (
@@ -119,6 +141,7 @@ function TaskForm() {
                     value={switches.allowedOrigins ? 'On' : 'Off'}
                     checked={switches.allowedOrigins}
                     onChange={() => handleSwitchChange('allowedOrigins')}
+                    disabled={false}
                   />
                 </TableCell>
                 <TableCell>
@@ -127,6 +150,7 @@ function TaskForm() {
                     value={switches.azureComponents ? 'On' : 'Off'}
                     checked={switches.azureComponents}
                     onChange={() => handleSwitchChange('azureComponents')}
+                    disabled={false}
                   />
                 </TableCell>
                 <TableCell>
@@ -135,6 +159,7 @@ function TaskForm() {
                     value={switches.orgConfig ? 'On' : 'Off'}
                     checked={switches.orgConfig}
                     onChange={() => handleSwitchChange('orgConfig')}
+                    disabled={false} 
                   />
                 </TableCell>
                 <TableCell>
@@ -143,6 +168,7 @@ function TaskForm() {
                     value={switches.gitUpload ? 'On' : 'Off'}
                     checked={switches.gitUpload}
                     onChange={() => handleSwitchChange('gitUpload')}
+                    disabled={false} 
                   />
                 </TableCell>
               </TableRow>
@@ -157,6 +183,7 @@ function TaskForm() {
                       value={toggle.value}
                       checked={toggle.checked}
                       onChange={() => handleToggleChange(azureToggles, index)}
+                      disabled={false}
                     />
                   </TableCell>
                   <TableCell>
@@ -166,6 +193,7 @@ function TaskForm() {
                         value={orgConfigToggles[index].value}
                         checked={orgConfigToggles[index].checked}
                         onChange={() => handleToggleChange(orgConfigToggles, index)}
+                        disabled={false} 
                       />
                     ) : null}
                   </TableCell>
