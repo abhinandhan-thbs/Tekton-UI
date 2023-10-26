@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
@@ -21,8 +21,17 @@ interface FormValues {
   artifact: string;
   templateType: string;
 }
+interface tabProps {
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+}
 
-function PrelimInfoForm() {
+function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
+
+  useEffect(() => {
+    setActiveTab(0);
+  }, [setActiveTab]);
+
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState<FormValues>({
     template: '',
@@ -177,3 +186,5 @@ function PrelimInfoForm() {
 }
 
 export default PrelimInfoForm;
+
+

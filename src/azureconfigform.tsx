@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -44,7 +44,16 @@ interface BackendOAuthConfig {
   clientSecret: string;
 }
 
-function ConfigurationsForm() {
+interface tabProps {
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function ConfigurationsForm({ activeTab, setActiveTab }: tabProps) {
+  useEffect(() => {
+    setActiveTab(4); 
+  }, [setActiveTab]);
+
   const location = useLocation();
   const state = location.state;
   const navigate = useNavigate();

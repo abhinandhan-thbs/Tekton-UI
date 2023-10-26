@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-function GitConfigForm() {
+interface tabProps {
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function GitConfigForm({ activeTab, setActiveTab }: tabProps) {
+  useEffect(() => {
+    setActiveTab(6); 
+  }, [setActiveTab]);
+
   const [serviceName, setServiceName] = useState<string>('');
   const [gitBranch, setGitBranch] = useState<string>('');
   const [showAdditionalButtons, setShowAdditionalButtons] = useState<boolean>(false);

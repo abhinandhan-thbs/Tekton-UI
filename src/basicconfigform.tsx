@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -10,7 +10,16 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
-function BasicConfigForm() {
+interface tabProps {
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
+  useEffect(() => {
+    setActiveTab(1); 
+  }, [setActiveTab]);
+
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number>(0);

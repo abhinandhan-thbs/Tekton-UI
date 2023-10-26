@@ -53,15 +53,16 @@ function TabbedFormRenderer({ activeTab, setActiveTab }: TabbedFormRendererProps
     },
   ];
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
+  // const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  //   setActiveTab(newValue);
+  // };
 
+  
   return (
     <Container>
       <Tabs
         value={activeTab}
-        onChange={handleTabChange}
+        // onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
         sx={{ border: 1, borderColor: 'divider' }}

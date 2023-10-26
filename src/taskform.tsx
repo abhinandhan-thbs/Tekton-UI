@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
@@ -19,6 +19,11 @@ interface AzureToggle {
   checked: boolean;
 }
 
+interface tabProps {
+  activeTab: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+}
+
 function CustomToggleSwitch({
   label,
   value,
@@ -32,6 +37,8 @@ function CustomToggleSwitch({
   onChange: () => void;
   disabled: boolean;
 }) {
+  
+
   return (
     <FormControlLabel
       control={
@@ -52,7 +59,11 @@ function CustomToggleSwitch({
   );
 }
 
-function TaskForm() {
+function TaskForm({ activeTab, setActiveTab }: tabProps) {
+  useEffect(() => {
+    setActiveTab(3); 
+  }, [setActiveTab]);
+  
   const navigate = useNavigate();
   const [switches, setSwitches] = useState({
     allowedOrigins: false,
@@ -110,7 +121,7 @@ function TaskForm() {
         allowedOriginsEnabled: switches.allowedOrigins,
         gitUploadEnabled: switches.gitUpload,
       };
-
+      
       navigate('/azureconfig', {
         state: {
           azureComponentsEnabled: finalState.azureComponentsEnabled,
@@ -142,6 +153,7 @@ function TaskForm() {
                     checked={switches.allowedOrigins}
                     onChange={() => handleSwitchChange('allowedOrigins')}
                     disabled={false}
+                    
                   />
                 </TableCell>
                 <TableCell>
