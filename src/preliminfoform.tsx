@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 
 interface FormValues {
   template: string;
-  microservice: boolean;
   gateway: boolean;
   apiTool: string;
   artifact: string;
@@ -35,7 +34,6 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState<FormValues>({
     template: '',
-    microservice: false,
     gateway: false,
     apiTool: '',
     artifact: '',
@@ -45,7 +43,6 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
   const isFormValid = () => {
     const {
       template,
-      microservice,
       gateway,
       apiTool,
       artifact,
@@ -54,7 +51,7 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
 
     return (
       template !== '' &&
-      (microservice || gateway) &&
+      gateway &&
       apiTool !== '' &&
       artifact !== '' &&
       templateType !== ''
@@ -64,6 +61,9 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
   const handleProceed = () => {
     if (isFormValid()) {
       navigate('/basicinfo');
+    }
+    else{
+      alert("Please fill all mandatory fields")
     }
   };
 
@@ -75,12 +75,13 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
+      <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h6">Template</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '0.5px solid #cccccc78', padding: 1 }}>
+          <Typography variant="h6">Template<span style={{ color: 'red' }}>*</span></Typography>
           <FormControl variant="outlined" sx={{ flex: 1, marginLeft: 2 }}>
-            <InputLabel htmlFor="template">Type</InputLabel>
+            <InputLabel htmlFor="template">Select Template</InputLabel>
             <Select
               label="Template"
               inputProps={{
@@ -91,21 +92,13 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
               onChange={(e) => handleChange('template', e.target.value)}
             >
               <MenuItem value={1}>Schneider Electric APIM</MenuItem>
+              <MenuItem value={2}>None</MenuItem>
             </Select>
           </FormControl>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
-          <Typography variant="h6">Service Type</Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formValues.microservice}
-                onChange={() => handleChange('microservice', !formValues.microservice)}
-              />
-            }
-            label="Microservice"
-          />
-          <FormControlLabel
+        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78', padding: 1 }}>
+          <Typography variant="h6">Service Type<span style={{ color: 'red' }}>*</span></Typography>
+          <FormControlLabel sx={{ marginLeft: 0.5 }}
             control={
               <Checkbox
                 checked={formValues.gateway}
@@ -115,11 +108,11 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
             label="Gateway"
           />
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
-          <Box sx={{ flex: 1 }}>
-            <Typography variant="h6">API Tool</Typography>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="apiTool">Type</InputLabel>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2,borderBottom: '0.5px solid #cccccc78', padding: 1 }}>
+          <Box sx={{ flex: 1, marginRight: 2 }}>
+            <Typography variant="h6">API Tool<span style={{ color: 'red' }}>*</span></Typography>
+            <FormControl variant="outlined" sx={{ width: '100%' }}>
+              <InputLabel htmlFor="apiTool">Select API Tool</InputLabel>
               <Select
                 label="API Tool"
                 inputProps={{
@@ -133,10 +126,10 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ flex: 1 }}>
-            <Typography variant="h6">Artifact</Typography>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="artifact">Type</InputLabel>
+          <Box sx={{ flex: 1, marginLeft: 2 }}>
+            <Typography variant="h6">Artifact <span style={{ color: 'red' }}>*</span></Typography>
+            <FormControl variant="outlined" sx={{ width: '100%' }}>
+              <InputLabel htmlFor="artifact">Select Artifact</InputLabel>
               <Select
                 label="Artifact"
                 inputProps={{
@@ -151,8 +144,8 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
             </FormControl>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
-          <Typography variant="h6">Template</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78', padding: 1 }}>
+          <Typography variant="h6">Template<span style={{ color: 'red' }}>*</span></Typography>
           <FormControlLabel
             control={<RadioGroup
               aria-label="templateRadio"
@@ -173,14 +166,13 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
                 sx={{ marginLeft: 2, marginRight: 2 }} />
             </RadioGroup>} label={undefined}          />
         </Box>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleProceed}
-        >
-          Proceed
-        </Button>
       </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={handleProceed}>
+            Proceed
+          </Button>
+      </Box>
+    </Box>
     </Container>
   );
 }

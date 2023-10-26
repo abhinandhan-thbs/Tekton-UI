@@ -9,7 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
@@ -63,13 +62,13 @@ function TaskForm({ activeTab, setActiveTab }: tabProps) {
   useEffect(() => {
     setActiveTab(3); 
   }, [setActiveTab]);
-  
+
   const navigate = useNavigate();
   const [switches, setSwitches] = useState({
     allowedOrigins: false,
-    azureComponents: false,
+    azureComponents: true,
     orgConfig: false,
-    gitUpload: false,
+    gitUpload: true,
   });
 
   const [azureToggles, setAzureToggles] = useState<AzureToggle[]>([
@@ -136,12 +135,15 @@ function TaskForm({ activeTab, setActiveTab }: tabProps) {
         },
       });
     }
+    else{
+      alert("Please fill all mandatory fields")
+    }
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
+      <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
-        <Typography variant="h6">Task Form</Typography>
         <TableContainer>
           <Table>
             <TableHead>
@@ -171,7 +173,7 @@ function TaskForm({ activeTab, setActiveTab }: tabProps) {
                     value={switches.orgConfig ? 'On' : 'Off'}
                     checked={switches.orgConfig}
                     onChange={() => handleSwitchChange('orgConfig')}
-                    disabled={false} 
+                    disabled={true} 
                   />
                 </TableCell>
                 <TableCell>
@@ -205,7 +207,7 @@ function TaskForm({ activeTab, setActiveTab }: tabProps) {
                         value={orgConfigToggles[index].value}
                         checked={orgConfigToggles[index].checked}
                         onChange={() => handleToggleChange(orgConfigToggles, index)}
-                        disabled={false} 
+                        disabled={true} 
                       />
                     ) : null}
                   </TableCell>
@@ -214,10 +216,13 @@ function TaskForm({ activeTab, setActiveTab }: tabProps) {
             </TableBody>
           </Table>
         </TableContainer>
-        <Button variant="contained" color="primary" onClick={handleProceed}>
-          Proceed
-        </Button>
       </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={handleProceed}>
+            Proceed
+          </Button>
+      </Box>
+    </Box>
     </Container>
   );
 }

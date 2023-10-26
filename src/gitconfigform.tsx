@@ -43,35 +43,43 @@ function GitConfigForm({ activeTab, setActiveTab }: tabProps) {
 
   return (
     <Container maxWidth="md">
-      <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
-        <Typography variant="h3">Git Config</Typography>
+      <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
+        <Typography variant="h4">Git Config</Typography>
+        <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
         <form>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-              <Typography variant="body1" sx={{ minWidth: 120, flexShrink: 0 }}>
-                Service name:
+        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78',  padding: 1 }}>
+              <Typography variant="h6" sx={{ width: '150px' }}>
+                Service Name <span style={{ color: 'red' }}>*</span>
               </Typography>
               <TextField
                 variant="outlined"
+                type="text"
                 fullWidth
+                label="Service Name"
+                sx={{ flex: '1' }}
                 value={serviceName}
                 onChange={handleServiceNameChange}
+                
               />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-              <Typography variant="body1" sx={{ minWidth: 120, flexShrink: 0 }}>
-                Git branch:
+            <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78',  padding: 1 }}>
+              <Typography variant="h6" sx={{ width: '150px' }}>
+                Git Branch <span style={{ color: 'red' }}>*</span>
               </Typography>
               <TextField
                 variant="outlined"
+                type="text"
                 fullWidth
+                label="Git Branch"
+                sx={{ flex: '1' }}
                 value={gitBranch}
                 onChange={handleGitBranchChange}
               />
             </Box>
-          </Box>
-          {showAdditionalButtons ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          </form>
+      </Box>
+      {showAdditionalButtons ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 }}>
               <Button
                 variant="contained"
                 color="primary"
@@ -93,6 +101,7 @@ function GitConfigForm({ activeTab, setActiveTab }: tabProps) {
               </Button>
             </Box>
           ) : (
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
             <Button
               variant="contained"
               color="primary"
@@ -100,8 +109,8 @@ function GitConfigForm({ activeTab, setActiveTab }: tabProps) {
             >
               Generate Artifacts
             </Button>
+            </Box>
           )}
-        </form>
       </Box>
     </Container>
   );

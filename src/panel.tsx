@@ -53,29 +53,28 @@ function TabbedFormRenderer({ activeTab, setActiveTab }: TabbedFormRendererProps
     },
   ];
 
-  // const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-  //   setActiveTab(newValue);
-  // };
-
-  
   return (
-    <Container>
+    <Container maxWidth="lg">
       <Tabs
         value={activeTab}
-        // onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
-        sx={{ border: 1, borderColor: 'divider' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          border: 1,
+          borderColor: 'divider',
+          marginTop: 2
+        }}
       >
         {tabs.map((tab, index) => (
           <Tab
             key={index}
             label={
-              <>
-                {tab.heading}
-                <br></br>
-                {tab.subheading}
-              </>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>{tab.heading}</span>
+                <span>{tab.subheading}</span>
+              </div>
             }
             sx={{
               border: 1,
@@ -83,6 +82,8 @@ function TabbedFormRenderer({ activeTab, setActiveTab }: TabbedFormRendererProps
               borderRadius: '5px',
               backgroundColor: activeTab === index ? 'orange' : '',
               color: activeTab === index ? 'white' : 'black',
+              flexGrow: 1,
+              flexBasis: 0,
             }}
           />
         ))}

@@ -65,16 +65,20 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
     if (isFormValid()) {
       navigate('/task');
     }
+    else{
+      alert("Please fill all mandatory fields")
+    }
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
+      <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
         <form>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 1  }}>
               <Typography variant="h6" sx={{ width: '150px' }}>
-                Swagger Spec
+                Swagger Spec <span style={{ color: 'red' }}>*</span>
               </Typography>
               <input
                 type="file"
@@ -131,9 +135,9 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
                 <Typography variant="h6">File uploaded successfully</Typography>
               </Box>
             )}
-            <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', borderTop: '0.5px solid #cccccc78', borderBottom: '0.5px solid #cccccc78', padding: 1 }}>
               <Typography variant="h6" sx={{ width: '150px' }}>
-                API name
+                API name <span style={{ color: 'red' }}>*</span>
               </Typography>
               <TextField
                 variant="outlined"
@@ -145,9 +149,9 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
                 onChange={(e) => setApiName(e.target.value)}
               />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78',  padding: 1 }}>
               <Typography variant="h6" sx={{ width: '150px' }}>
-                Description
+                Description <span style={{ color: 'red' }}>*</span>
               </Typography>
               <TextField
                 variant="outlined"
@@ -159,9 +163,9 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '0.5px solid #cccccc78',  padding: 1 }}>
               <Typography variant="h6" sx={{ width: '150px' }}>
-                Base Path
+                Base Path <span style={{ color: 'red' }}>*</span>
               </Typography>
               <TextField
                 variant="outlined"
@@ -173,16 +177,15 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
                 onChange={(e) => setBasePath(e.target.value)}
               />
             </Box>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleProceed}
-            >
-              Proceed
-            </Button>
           </Box>
         </form>
       </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={handleProceed}>
+            Proceed
+          </Button>
+      </Box>
+    </Box>
     </Container>
   );
 }
