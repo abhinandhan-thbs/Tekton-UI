@@ -8,8 +8,12 @@ const dummyUsers = [
   { username: 'admin', password: 'Admin123' },
   { username: 'user', password: 'User123' },
 ];
+interface LoginProps {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (value: boolean) => void;
+}
 
-const Login = () => {
+const Login : React.FC<LoginProps> = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,6 +30,7 @@ const Login = () => {
       );
 
       if (user) {
+        setIsLoggedIn(true);
         navigate("/preliminfo");
       } else {
         setError('Wrong username or password. Please try again.');
