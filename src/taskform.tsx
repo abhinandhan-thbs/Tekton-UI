@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import TabbedFormRenderer from './panel';
 
 interface AzureToggle {
   label: string;
@@ -142,6 +143,9 @@ function TaskForm({ activeTab, setActiveTab }: tabProps) {
 
   return (
     <Container maxWidth="lg">
+      <Container>
+      <TabbedFormRenderer activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Container>
       <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
         <TableContainer>

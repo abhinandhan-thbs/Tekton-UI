@@ -12,6 +12,7 @@ import Radio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import TabbedFormRenderer from './panel';
 
 interface FormValues {
   template: string;
@@ -76,6 +77,9 @@ function PrelimInfoForm({ activeTab, setActiveTab }: tabProps) {
 
   return (
     <Container maxWidth="lg">
+      <Container>
+      <TabbedFormRenderer activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Container>
       <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '0.5px solid #cccccc78', padding: 1 }}>

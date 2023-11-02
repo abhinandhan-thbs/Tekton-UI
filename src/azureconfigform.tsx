@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate, useLocation } from 'react-router-dom';
+import TabbedFormRenderer from './panel';
 
 interface RateLimitConfig {
   numberOfCalls: string;
@@ -19,13 +20,17 @@ interface RateLimitConfig {
 interface CacheResponseConfig {
   duration: string;
 }
+interface Claim {
+  name: string;
+  match: string;
+}
 
 interface ValidateJwtConfig {
   headerName: string;
   failedValidationHttpCode: string;
   failedValidationErrorMsg: string;
   openIdUrl: string;
-  requiredClaims: string[];
+  requiredClaims: Claim[];
 }
 
 interface CorrelationConfig {
@@ -73,7 +78,9 @@ function ConfigurationsForm({ activeTab, setActiveTab }: tabProps) {
     failedValidationHttpCode: '',
     failedValidationErrorMsg: '',
     openIdUrl: '',
-    requiredClaims: [],
+    requiredClaims: [
+      { name: '', match: '' },
+    ],
   });
 
   const [correlationConfig, setCorrelationConfig] = useState<CorrelationConfig>({
@@ -110,13 +117,14 @@ function ConfigurationsForm({ activeTab, setActiveTab }: tabProps) {
   const handleAddRow = () => {
     setValidateJwtConfig({
       ...validateJwtConfig,
-      requiredClaims: [...validateJwtConfig.requiredClaims, ''],
+      requiredClaims: [...validateJwtConfig.requiredClaims, { name: '', match: '' }],
     });
   };
+  
 
-  const handleClaimChange = (index: number, value: string) => {
+  const handleClaimChange = (index: number, property: string, value: string) => {
     const updatedClaims = [...validateJwtConfig.requiredClaims];
-    updatedClaims[index] = value;
+    updatedClaims[index] = { ...updatedClaims[index], [property]: value };
     setValidateJwtConfig({
       ...validateJwtConfig,
       requiredClaims: updatedClaims,
@@ -224,6 +232,9 @@ function ConfigurationsForm({ activeTab, setActiveTab }: tabProps) {
 
   return (
     <Container maxWidth="lg">
+      <Container>
+      <TabbedFormRenderer activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Container>
       <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       {state.rateLimitEnabled && (
@@ -347,8 +358,8 @@ function ConfigurationsForm({ activeTab, setActiveTab }: tabProps) {
                   </Typography>
                   <TextField
                     fullWidth
-                    value={claim}
-                    onChange={(e) => handleClaimChange(index, e.target.value)}
+                    value={claim.name}
+                    onChange={(e) => handleClaimChange(index,'name', e.target.value)}
                   />
                 </Box>
                 <Box sx={{ flex: 1, marginRight: 2 }}>
@@ -357,8 +368,8 @@ function ConfigurationsForm({ activeTab, setActiveTab }: tabProps) {
                   </Typography>
                   <Select
                     fullWidth
-                    value={claim}
-                    onChange={(e) => handleClaimChange(index, e.target.value)}
+                    value={claim.match}
+                    onChange={(e) => handleClaimChange(index,'match',e.target.value)}
                   >
                     <MenuItem value="All claims">All claims</MenuItem>
                     <MenuItem value="Any claims">Any claims</MenuItem>

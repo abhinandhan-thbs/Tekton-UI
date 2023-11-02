@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import TabbedFormRenderer from './panel';
 
 interface tabProps {
   activeTab: number;
@@ -72,6 +73,9 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
 
   return (
     <Container maxWidth="lg">
+      <Container>
+      <TabbedFormRenderer activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Container>
       <Box sx={{ padding: 3, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
       <Box sx={{ padding: 2, border: '1px solid #ccc', backgroundColor: '#f9f9f9', marginTop: 2 }}>
         <form>
