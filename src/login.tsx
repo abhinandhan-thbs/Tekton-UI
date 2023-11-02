@@ -7,6 +7,8 @@ import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 const dummyUsers = [
   { username: 'admin', password: 'Admin123' },
   { username: 'user', password: 'User123' },
+  { username: '1', password: '1' },
+
 ];
 interface LoginProps {
   isLoggedIn: boolean;

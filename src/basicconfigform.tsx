@@ -129,14 +129,14 @@ function BasicConfigForm({ activeTab, setActiveTab }: tabProps) {
               )}
             </Box>
             {selectedFile && uploadProgress > 0 && (
-              <Box className="upload-progress">
+              <Box>
                 <LinearProgress variant="determinate" value={uploadProgress} />
               </Box>
             )}
             {selectedFile && uploadProgress === 100 && (
-              <Box className="upload-success">
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <CheckCircleIcon fontSize="large" style={{ color: 'green' }} />
-                <Typography variant="h6">File uploaded successfully</Typography>
+                <Typography variant="h6">{selectedFile.name} uploaded successfully</Typography>
               </Box>
             )}
             <Box sx={{ display: 'flex', alignItems: 'center', borderTop: '0.5px solid #cccccc78', borderBottom: '0.5px solid #cccccc78', padding: 1 }}>
